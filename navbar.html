@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Navbar</title>
+    <link rel="stylesheet" href="css/navbar.css" />
+  </head>
+  <body>
+    <nav>
+      <div class="nav-left">
+        <ul>
+          <li class="link">
+            <a href="index.html">
+              <img src="gambar/logo.png" alt="logo" />
+            </a>
+          </li>
+          <li class="li-colabs">
+            <a href="index.html">Home</a>
+          </li>
+          <li class="li-colabs">
+            <a href="myProject.html">My Project</a>
+          </li>
+          <li class="active li-colabs">
+            <a href="testimonials.html">Testimonials</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="nav-right">
+        <div class="li-colabs">
+          <a href="contact.html">
+            <p>Contact</p>
+          </a>
+        </div>
+        <div class="button-bars">
+          <button onclick="toggleBarHandle()">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <div class="item-list-menu-bars" id="item-list-menu-bars">
+      <ul>
+        <li>
+          <a href="index.html">Home</a>
+        </li>
+        <li>
+          <a href="myProject.html">My Project</a>
+        </li>
+        <li>
+          <a href="testimonials.html">Testimonials</a>
+        </li>
+        <li>
+          <a href="contact.html">
+            <p>Contact</p>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>
