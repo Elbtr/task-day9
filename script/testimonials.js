@@ -96,7 +96,6 @@ const filterRating = (rating) => {
     const messageEmptyData = document.getElementById("message-empty-data");
     messageEmptyData.style.display = "block";
     messageEmptyData.style.textAlign = "center";
-    messageEmptyData.style.marginTop = "40px";
     messageEmptyData.innerHTML = `<h2>Sory your data not found!!</h2>`;
   } else {
     const messageEmptyData = document.getElementById("message-empty-data");

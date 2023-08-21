@@ -76,6 +76,10 @@
   transition-timing-function: ease-in-out;
 }
 
+.message-empty-data {
+  margin-top: 40px;
+}
+
 @media only screen and (max-width: 900px) {
   .container-testimonials {
     width: 600px;
