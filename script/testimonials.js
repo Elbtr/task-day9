@@ -138,7 +138,7 @@ const buttonClick = () => {
   let iconHtml = "";
   const number = [1, 2, 3, 4, 5];
 
-  const numberButtonsOnClick = number
+  const ratingButtonsOnClick = number
     .map(
       (num) => `
   <button class="select-rating" onclick="filterRating('${num}')">
@@ -157,7 +157,7 @@ const buttonClick = () => {
         `;
     }
   });
-  iconHtml += numberButtonsOnClick;
+  iconHtml += ratingButtonsOnClick;
 
   const createButtonElement = document.getElementById("select-rating");
   createButtonElement.innerHTML = iconHtml;
