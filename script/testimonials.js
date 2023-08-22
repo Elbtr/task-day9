@@ -1,34 +1,3 @@
-const testimonialData = [
-  {
-    image:
-      "https://images.pexels.com/photos/15126611/pexels-photo-15126611/free-photo-of-proyek-oleh-profil-salon.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    quote: "i am singel woman are you like me?",
-    author: "Chandri Anggara",
-    rating: "1",
-  },
-  {
-    image:
-      "https://images.pexels.com/photos/15157314/pexels-photo-15157314/free-photo-of-kacamata-hitam-wanita-duduk-rokok.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    quote: "i am singel woman are you like me?",
-    author: "Chandri Anggara",
-    rating: "4",
-  },
-  {
-    image:
-      "https://images.pexels.com/photos/13926527/pexels-photo-13926527.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    quote: "i am singel woman are you like me?",
-    author: "Chandri Anggara",
-    rating: "3",
-  },
-  {
-    image:
-      "https://images.pexels.com/photos/15093015/pexels-photo-15093015/free-photo-of-romantis-antik.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    quote: "i am singel woman are you like me?",
-    author: "Chandri Anggara",
-    rating: "1",
-  },
-];
-
 const dataIconRating = [
   {
     rating: "all",
@@ -50,76 +19,107 @@ const dataIconRating = [
   },
 ];
 
-const selectAllRating = () => {
-  let allRatingHtml = "";
+const testimonials = new Promise((resolve, reject) => {
+  const request = new XMLHttpRequest();
 
-  if (testimonialData.length == 0) {
-    const messageEmptyData = document.getElementById("message-empty-data");
-    messageEmptyData.style.display = "block";
-    messageEmptyData.style.textAlign = "center";
-    messageEmptyData.innerHTML = `<h2>Empty Data!!</h2>`;
-  } else {
-    testimonialData.forEach((item) => {
-      allRatingHtml += `
-        <div class="card-testimonial">
-            <div class="image-testimonial">
-                <img src="${item.image}" alt="testimonial" />
-            </div>
-            <div class="content-testimonial">
-                <h4 class="quote">${item.quote}</h4>
-                <p class="author">~${item.author}</p>
-                <p class="author">
-                ${item.rating}
-                <i class="fa-solid fa-star"></i>
-                </p>
-            </div>
-         </div>
-                `;
-    });
-    const messageEmptyData = document.getElementById("message-empty-data");
-    messageEmptyData.style.display = "none";
+  request.open("GET", "https://api.npoint.io/e360bc70db807e68973b", true);
+
+  request.onload = () => {
+    if (request.status == 200) {
+      resolve(JSON.parse(request.response));
+    } else {
+      reject("somthing when wrong");
+    }
+  };
+  request.onerror = () => {
+    reject("request error");
+  };
+
+  request.send();
+});
+
+const selectAllRating = async () => {
+  try {
+    let allRatingHtml = "";
+
+    const response = await testimonials;
+
+    if (response.length == 0) {
+      const messageEmptyData = document.getElementById("message-empty-data");
+      messageEmptyData.style.display = "block";
+      messageEmptyData.style.textAlign = "center";
+      messageEmptyData.innerHTML = `<h2>Empty Data!!</h2>`;
+    } else {
+      response.forEach((item) => {
+        allRatingHtml += `
+          <div class="card-testimonial">
+              <div class="image-testimonial">
+                  <img src="${item.image}" alt="testimonial" />
+              </div>
+              <div class="content-testimonial">
+                  <h4 class="quote">${item.quote}</h4>
+                  <p class="author">~${item.author}</p>
+                  <p class="author">
+                  ${item.rating}
+                  <i class="fa-solid fa-star"></i>
+                  </p>
+              </div>
+           </div>
+                  `;
+      });
+      const messageEmptyData = document.getElementById("message-empty-data");
+      messageEmptyData.style.display = "none";
+    }
+    document.getElementById("card-content-testimonials").innerHTML =
+      allRatingHtml;
+  } catch (err) {
+    console.log(err);
   }
-  document.getElementById("card-content-testimonials").innerHTML =
-    allRatingHtml;
 };
 
 selectAllRating();
 
-const filterRating = (rating) => {
-  let ratingHtml = "";
+const filterRating = async (rating) => {
+  try {
+    const response = await testimonials;
 
-  const filtered = testimonialData.filter((item) => {
-    return item.rating === rating;
-  });
+    let ratingHtml = "";
 
-  if (filtered.length == 0) {
-    const messageEmptyData = document.getElementById("message-empty-data");
-    messageEmptyData.style.display = "block";
-    messageEmptyData.style.textAlign = "center";
-    messageEmptyData.innerHTML = `<h2>Sory your data not found!!</h2>`;
-  } else {
-    const messageEmptyData = document.getElementById("message-empty-data");
-    messageEmptyData.style.display = "none";
-    filtered.forEach((item) => {
-      ratingHtml += `
-        <div class="card-testimonial">
-            <div class="image-testimonial">
-                <img src="${item.image}" alt="testimonial" />
-            </div>
-            <div class="content-testimonial">
-                <h4 class="quote">${item.quote}</h4>
-                <p class="author">~${item.author}</p>
-                <p class="author">
-                ${item.rating}
-                <i class="fa-solid fa-star"></i>
-                </p>
-            </div>
-         </div>
-                `;
+    const filtered = response.filter((item) => {
+      return item.rating === rating;
     });
-  }
 
-  document.getElementById("card-content-testimonials").innerHTML = ratingHtml;
+    if (filtered.length == 0) {
+      const messageEmptyData = document.getElementById("message-empty-data");
+      messageEmptyData.style.display = "block";
+      messageEmptyData.style.textAlign = "center";
+      messageEmptyData.innerHTML = `<h2>Sory your data not found!!</h2>`;
+    } else {
+      const messageEmptyData = document.getElementById("message-empty-data");
+      messageEmptyData.style.display = "none";
+      filtered.forEach((item) => {
+        ratingHtml += `
+          <div class="card-testimonial">
+              <div class="image-testimonial">
+                  <img src="${item.image}" alt="testimonial" />
+              </div>
+              <div class="content-testimonial">
+                  <h4 class="quote">${item.quote}</h4>
+                  <p class="author">~${item.author}</p>
+                  <p class="author">
+                  ${item.rating}
+                  <i class="fa-solid fa-star"></i>
+                  </p>
+              </div>
+           </div>
+                  `;
+      });
+    }
+
+    document.getElementById("card-content-testimonials").innerHTML = ratingHtml;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const buttonClick = () => {
